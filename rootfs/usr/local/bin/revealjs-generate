@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Main Function
+#
+# Arguments:
+#  --file filename.adoc
+#
+# Returns the exit code of the last command executed or 0 otherwise.
+function main()
+{
+  # set node path to use global modules
+  export NODE_PATH=/usr/local/lib/node_modules
+
+  # call node script
+  node /usr/local/bin/asciidoctor-revealjs.js "$@"
+}
+
+# entrypoint
+main "$@"
