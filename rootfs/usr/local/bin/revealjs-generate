@@ -5,13 +5,11 @@ set -euo pipefail
 #
 # Arguments:
 #  --file filename.adoc
+#  --targetdir path
 #
 # Returns the exit code of the last command executed or 0 otherwise.
 function main()
 {
-  # set node path to use global modules
-  export NODE_PATH=/usr/local/lib/node_modules
-
   # call node script
   node /usr/local/bin/asciidoctor-revealjs.js "$@"
 }
