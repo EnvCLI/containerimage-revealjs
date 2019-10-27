@@ -3,20 +3,27 @@
 ############################################################
 
 # Set the base image
-FROM docker.io/node:13.0-alpine
+FROM docker.io/alpine:3.10
+
+ENV RUBYGEM_ASCIIDOCTOR="asciidoctor:2.0.10" \
+    RUBYGEM_ASCIIDOCTOR_REVEALJS="asciidoctor-revealjs:2.0.0"
 
 ############################################################
 # Installation
 ############################################################
 
 ADD rootfs /
-RUN apk add --no-cache bash &&\
-    npm install --save --global asciidoctor@2.0.3 &&\
-	npm install --save --global asciidoctor-reveal.js@2.0.0 &&\
-    npm install --save --global minimist@1.2.0 &&\
-    chmod +x /usr/local/bin/revealjs-generate
+RUN echo "Installing OS-Packages ..." &&\
+    apk add --no-cache \
+    bash \
+    ruby \
+    ruby-mathematical \
+    ruby-rake &&\
+    echo "Installing RubyGems" &&\
+    gem install --no-document \
+    "$RUBYGEM_ASCIIDOCTOR" \
+    "$RUBYGEM_ASCIIDOCTOR_REVEALJS"
     
 ############################################################
 # Execution
 ############################################################
-CMD [ "revealjs-generate"]
